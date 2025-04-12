@@ -6,12 +6,12 @@
 
 // Layer Defines
 #define _QWERTY         (0U)
-#define _NAVIGATE       (1U)
-#define _NUMPAD         (2U)
-#define _SYMBOL_LEFT    (3U)
-#define _SYMBOL_RIGHT   (4U)
-#define _FUNCTION       (5U)
-#define _COLEMAK        (6U)
+#define _COLEMAK        (1U)
+#define _NAVIGATE       (2U)
+#define _NUMPAD         (3U)
+#define _SYMBOL_LEFT    (4U)
+#define _SYMBOL_RIGHT   (5U)
+#define _FUNCTION       (6U)
 
 // Layer Shortcuts
 #define L_QWRTY      DF(_QWERTY)                   // Activates base layer and deactivates all others
@@ -36,7 +36,7 @@
 #define R_SYM        MO(_SYMBOL_RIGHT)
 
 // The Colemak layer provides an alternative layout to qwerty
-#define R_COLEM      TT(_COLEMAK)
+#define R_COLEM      DF(_COLEMAK)
 
 // Home Row Mods, see https://precondition.github.io/home-row-mods#using-home-row-mods-with-qmk
 // Have modifiers on the home row without having a separate layer
@@ -51,15 +51,15 @@
 #define HR_SCLN      RGUI_T(KC_SCLN)
 
 // Colemak Home Row Mods
-#define HRC_A        LGUI_T(KC_R)
-#define HRC_S        LALT_T(KC_T)
+#define HR_A        LGUI_T(KC_A)
+#define HR_S        LALT_T(KC_S)
 #define HR_R         LCTL_T(KC_R)
 #define HR_T         LSFT_T(KC_T)
 
 #define HR_N         RSFT_T(KC_N)
 #define HR_E         RCTL_T(KC_E)
 #define HR_I         RALT_T(KC_I)
-#define HR_O         RSFT_T(KC_O)
+#define HR_O         RGUI_T(KC_O)
 
 // One shot mods
 #define OS_LSFT      OSM(MOD_LSFT)
@@ -101,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                               KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, HRC_A,   HR_R,    HRC_S,   HR_T,    KC_G,                               KC_M,    HR_N,    HR_E,    HR_I,    HR_O,    _______,
+     _______, HR_A,    HR_R,    HR_S,    HR_T,    KC_G,                               KC_M,    HR_N,    HR_E,    HR_I,    HR_O,    _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      _______, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    L_QWRTY,          R_COLEM, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, OS_RSFT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
@@ -174,67 +174,3 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 };
-
-//========================================
-// Keymap Main Handler
-//========================================
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case QWERTY:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(_QWERTY);
-      }
-      return false;
-      break;
-    case COLEMAK:
-      if (record->event.pressed) {
-        layer_on(_COLEMAK);
-      } else {
-        layer_off(_COLEMAK);
-      }
-      return false;
-      break;
-    case NAVIGATE:
-      if (record->event.pressed) {
-        layer_on(_NAVIGATE);
-      } else {
-        layer_off(_NAVIGATE);
-      }
-      return false;
-      break;
-    case NUMPAD:
-      if (record->event.pressed) {
-        layer_on(_NUMPAD);
-      } else {
-        layer_off(_NUMPAD);
-      }
-      return false;
-      break;      
-    case SYMBOL_LEFT:
-      if (record->event.pressed) {
-        layer_on(_SYMBOL_LEFT);
-      } else {
-        layer_off(_SYMBOL_LEFT);
-      }
-      return false;
-      break;
-    case SYMBOL_RIGHT:
-      if (record->event.pressed) {
-        layer_on(_SYMBOL_RIGHT);
-      } else {
-        layer_off(_SYMBOL_RIGHT);
-      }
-      return false;
-      break;
-    case FUNCTION:
-      if (record->event.pressed) {
-        layer_on(_FUNCTION);
-      } else {
-        layer_off(_FUNCTION);
-      }
-      return false;
-      break;
-  }
-  return true;
-}
